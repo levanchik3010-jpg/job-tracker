@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Job Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎯 Job Tracker</h1>
+            <div class="user-info hidden" id="userInfo">
+                <span id="userName"></span>
+                <button class="export-btn" onclick="exportCSV()">📄 Экспорт CSV</button>
+                <button class="logout-btn" onclick="logout()">🚪 Выйти</button>
+            </div>
+        </div>
+
+        <!-- Форма входа/регистрации -->
+        <div id="authForm" class="form-card">
+            <div class="form-title" id="authTitle">🔐 Вход в систему</div>
+            <div id="loginForm">
+                <div class="form-group">
+                    <label>Имя пользователя</label>
+                    <input type="text" id="loginUsername" placeholder="username">
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" id="loginPassword" placeholder="password">
+                </div>
+                <button class="btn btn-primary" onclick="login()">Войти</button>
+                <button class="btn btn-outline" onclick="showRegister()" style="margin-left: 0.5rem;">Зарегистрироваться</button>
+            </div>
+            <div id="registerForm" class="hidden">
+                <div class="form-group">
+                    <label>Имя пользователя</label>
+                    <input type="text" id="regUsername" placeholder="username">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="regEmail" placeholder="email@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" id="regPassword" placeholder="password">
+                </div>
+                <button class="btn btn-primary" onclick="register()">Зарегистрироваться</button>
+                <button class="btn btn-outline" onclick="showLogin()" style="margin-left: 0.5rem;">Назад</button>
+            </div>
+            <div id="authMessage"></div>
+        </div>
+
+        <!-- Основной контент (после входа) -->
+        <div id="mainContent" class="hidden">
+            
+            <!-- Уведомления -->
+            <div id="notifications" class="form-card notification" style="display:none;">
+                <div class="form-title">⚠️ Требуют внимания</div>
+                <div id="notificationsList"></div>
+            </div>
+
+            <!-- Статистика -->
+            <div class="stats" id="stats"></div>
+
+            <!-- График -->
+            <div class="form-card" id="chartContainer" style="display:none;">
+                <div class="form-title">📈 Аналитика по статусам</div>
+                <canvas id="statusChart" width="400" height="200"></canvas>
+            </div>
+
+            <!-- Форма добавления вакансии -->
+            <div class="form-card">
+                <div class="form-title">➕ Новая вакансия</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Компания</label>
+                        <input type="text" id="company" placeholder="Яндекс, Google...">
+                    </div>
+                    <div class="form-group">
+                        <label>Должность</label>
+                        <input type="text" id="position" placeholder="Python разработчик">
+                    </div>
+                    <div class="form-group">
+                        <label>Зарплата</label>
+                        <input type="text" id="salary" placeholder="300 000 ₽">
+                    </div>
+                    <div class="form-group">
+                        <label>Ссылка на вакансию</label>
+                        <input type="text" id="url" placeholder="https://hh.ru/vacancy/...">
+                    </div>
+                    <div class="form-group">
+                        <label>Заметки</label>
+                        <textarea id="notes" rows="3" placeholder="Что нужно знать..."></textarea>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addVacancy()">➕ Добавить вакансию</button>
+            </div>
+
+            <!-- Поиск -->
+            <div class="form-card">
+                <div class="form-title">🔍 Поиск вакансий</div>
+                <div class="form-group">
+                    <input type="text" id="searchInput" placeholder="Поиск по компании или должности..." onkeyup="searchVacancies()">
+                </div>
+            </div>
+
+            <!-- Список вакансий -->
+            <div class="vacancies-grid" id="vacanciesList"></div>
+
+            <!-- Пагинация -->
+            <div id="pagination"></div>
+
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
